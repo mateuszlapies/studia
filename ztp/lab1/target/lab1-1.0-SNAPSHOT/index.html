@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://java.sun.com/jsf/composite">
+    <head>
+        <meta charset="UTF-8">
+        <title>Logowanie</title>
+        <style>
+            .padding {
+                padding-bottom: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="text-align: center">
+            <h1>Formularz logowania</h1>
+            <form method="get" action="/LoginServlet">
+                <div class="padding">
+                    <div>Login</div>
+                    <input type="text" name="login"/>
+                </div>
+                <div class="padding">
+                    <div>Hasło</div>
+                    <input type="password" name="pass"/>
+                </div>
+                <div class="padding">
+                    <input type="submit" value="Zaloguj"/>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
