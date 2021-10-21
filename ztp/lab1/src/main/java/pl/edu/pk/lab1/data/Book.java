@@ -1,7 +1,5 @@
 package pl.edu.pk.lab1.data;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.Serializable;
 
 public class Book implements Serializable {
@@ -22,16 +20,7 @@ public class Book implements Serializable {
         return String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", title, author, year);
     }
 
-    private String getJson() {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.writeValueAsString(this);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    public String toAdminString() {
-        return String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td><input type='button' value='-' onclick='fetch(`/AdminServlet`, {method: `post`, body: `%s`})'/></td></tr>", title, author, year, getJson());
+    public String toAdminString(int index) {
+        return String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td><input type='button' value='-' onclick='fetch(`/AdminServlet`, {method: `delete`, body: `%s`}).then(() => location.reload())'/></td></tr>", title, author, year, index);
     }
 }

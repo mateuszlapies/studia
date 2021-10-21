@@ -12,10 +12,10 @@ public class LibraryContextServletListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ArrayList<Book> books = new ArrayList<>();
-        books.add(new Book("lol", "lol", 1995));
-        books.add(new Book("lol2", "lol4", 2020));
-        books.add(new Book("lol10", "lol33", 1985));
-        books.add(new Book("lol55", "lol1", 2004));
+        books.add(new Book("Absalom, Absalom!", "William Faulkner", 	1936));
+        books.add(new Book("Death Be Not Proud", "John Gunther", 1949));
+        books.add(new Book("I Know Why the Caged Bird Sings", "Maya Angelou", 1969));
+        books.add(new Book("Unweaving the Rainbow", "Richard Dawkins", 1998));
         sce.getServletContext().setAttribute("books", books);
     }
 }

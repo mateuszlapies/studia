@@ -16,4 +16,10 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("UserLoginServlet").forward(request, response);
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        getServletContext().setAttribute("user", "");
+        resp.sendRedirect("/");
+    }
 }

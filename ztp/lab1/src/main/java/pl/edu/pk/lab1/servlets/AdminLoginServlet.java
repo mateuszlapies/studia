@@ -10,9 +10,10 @@ public class AdminLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pass = request.getParameter("pass");
-        if(pass.equals("admin"))
+        if("admin".equals(pass)) {
+            getServletContext().setAttribute("user", request.getParameter("login"));
             request.getRequestDispatcher("/AdminServlet").forward(request, response);
-        else
+        } else
             response.sendRedirect("loginFailed.html");
     }
 }

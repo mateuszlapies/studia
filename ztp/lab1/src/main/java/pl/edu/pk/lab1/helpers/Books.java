@@ -1,6 +1,5 @@
 package pl.edu.pk.lab1.helpers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import pl.edu.pk.lab1.data.Book;
 
 import java.io.PrintWriter;
@@ -12,24 +11,24 @@ public class Books {
         if(admin)
             writer.write("<th>Delete</th>");
         writer.write("</tr>");
-        for(Book book : books) {
+        for(int i = 0; i < books.size(); i++) {
             if(admin)
-                writer.write(book.toAdminString());
+                writer.write(books.get(i).toAdminString(i));
             else
-                writer.write(book.toString());
+                writer.write(books.get(i).toString());
         }
         writer.write("</table>");
     }
 
     public static void Add(PrintWriter writer) {
-        writer.write("<form onsubmit='fetch(`/AdminServlet`, {method: `post`, body: JSON.stringify({title: event.title.value, author: event.author.value, event.year.value})})'>");
-        writer.write("<table>");
+        writer.write("<form method='post' action='/AdminServlet'>");
+        writer.write("<table style='text-align: center; padding-top: 1rem'>");
         writer.write("<tr>");
         writer.write("<td><input type='text' name='title'/></td>");
         writer.write("<td><input type='text' name='author'/></td>");
         writer.write("<td><input type='number' name='year'/></td>");
         writer.write("<td><input type='submit' value='+'/></td>");
         writer.write("</tr>");
-        writer.write("</table>");
+        writer.write("</table></form>");
     }
 }

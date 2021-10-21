@@ -19,11 +19,12 @@ public class UserLoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String user = request.getParameter("login");
+        String login = request.getParameter("login");
         String pass = request.getParameter("pass");
-        if(checkUser(user, pass))
+        if(checkUser(login, pass)) {
+            getServletContext().setAttribute("user", login);
             request.getRequestDispatcher("DashboardServlet").forward(request, response);
-        else
+        } else
             response.sendRedirect("loginFailed.html");
     }
 

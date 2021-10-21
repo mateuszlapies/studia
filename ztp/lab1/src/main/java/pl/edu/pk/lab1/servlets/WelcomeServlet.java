@@ -13,7 +13,7 @@ public class WelcomeServlet extends HttpServlet {
         if(user == null || user.isEmpty())
             response.sendRedirect("/index.html");
         else
-            if(user.equals("admin"))
+            if("admin".equals(user))
                 request.getRequestDispatcher("/AdminServlet").forward(request, response);
             else
                 request.getRequestDispatcher("/DashboardServlet").forward(request, response);
