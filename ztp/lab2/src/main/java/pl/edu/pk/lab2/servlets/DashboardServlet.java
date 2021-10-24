@@ -40,16 +40,13 @@ public class DashboardServlet extends HttpServlet {
         Helper.addResponseAttributes(resp);
         Gson gson = new Gson();
         try {
-            User user = (User)req.getSession().getAttribute("user");
-            if(user.getRole().equals(Role.ADMIN)) {
-                Book book = gson.fromJson(req.getReader(), Book.class);
-                ListHelper books = getBooks(req);
-                boolean added = addBook(books, book);
-                if (added)
-                    setBooks(req, books);
-                gson.toJson(new DashboardResponse(book, added), resp.getWriter());
-            } else
-                throw new UnauthorizedException();
+            verifyAdmin(req);
+            Book book = gson.fromJson(req.getReader(), Book.class);
+            ListHelper books = getBooks(req);
+            boolean added = addBook(books, book);
+            if (added)
+                setBooks(req, books);
+            gson.toJson(new DashboardResponse(book, added), resp.getWriter());
         } catch (UnauthorizedException e) {
             e.printStackTrace();
             gson.toJson(new ExceptionResponse(401, e), resp.getWriter());
@@ -66,16 +63,13 @@ public class DashboardServlet extends HttpServlet {
         Helper.addResponseAttributes(resp);
         Gson gson = new Gson();
         try {
-            User user = (User)req.getSession().getAttribute("user");
-            if(user.getRole().equals(Role.ADMIN)) {
-                int id = Integer.parseInt(req.getParameter("id"));
-                ListHelper books = getBooks(req);
-                Optional<Book> book = removeBook(books, id);
-                if (book.isPresent())
-                    setBooks(req, books);
-                gson.toJson(new DashboardResponse(book), resp.getWriter());
-            } else
-                throw new UnauthorizedException();
+            verifyAdmin(req);
+            int id = Integer.parseInt(req.getParameter("id"));
+            ListHelper books = getBooks(req);
+            Optional<Book> book = removeBook(books, id);
+            if (book.isPresent())
+                setBooks(req, books);
+            gson.toJson(new DashboardResponse(book), resp.getWriter());
         } catch (UnauthorizedException e) {
             e.printStackTrace();
             gson.toJson(new ExceptionResponse(401, e), resp.getWriter());
@@ -84,6 +78,12 @@ public class DashboardServlet extends HttpServlet {
             gson.toJson(new ExceptionResponse(500, e), resp.getWriter());
         }
         System.out.println("Out DashboardServlet DELETE");
+    }
+
+    private void verifyAdmin(HttpServletRequest req) throws UnauthorizedException {
+        User user = (User)req.getSession().getAttribute("user");
+        if(!user.getRole().equals(Role.ADMIN))
+            throw new UnauthorizedException();
     }
 
     private ListHelper getBooks(HttpServletRequest request)
