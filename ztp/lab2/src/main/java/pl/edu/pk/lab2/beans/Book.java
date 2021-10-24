@@ -2,7 +2,8 @@ package pl.edu.pk.lab2.beans;
 
 import java.io.Serializable;
 
-public class Book implements Serializable {
+public class Book implements Comparable<Book> {
+    public int id;
     public String title;
     public String author;
     public int year;
@@ -15,12 +16,9 @@ public class Book implements Serializable {
         this.year = year;
     }
 
-    @Override
-    public String toString() {
-        return String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", title, author, year);
-    }
 
-    public String toAdminString(int index) {
-        return String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td><input type='button' value='-' onclick='fetch(`/AdminServlet`, {method: `delete`, body: `%s`}).then(() => location.reload())'/></td></tr>", title, author, year, index);
+    @Override
+    public int compareTo(Book o) {
+        return Integer.compare(id, o.id);
     }
 }
