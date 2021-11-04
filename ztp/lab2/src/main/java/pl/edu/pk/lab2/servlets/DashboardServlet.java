@@ -29,6 +29,7 @@ public class DashboardServlet extends HttpServlet {
             gson.toJson(new DashboardResponse(books), resp.getWriter());
         } catch (Exception e) {
             e.printStackTrace();
+            resp.setStatus(500);
             gson.toJson(new ExceptionResponse(500, e), resp.getWriter());
         }
         System.out.println("Out DashboardServlet GET");
@@ -49,9 +50,11 @@ public class DashboardServlet extends HttpServlet {
             gson.toJson(new DashboardResponse(book, added), resp.getWriter());
         } catch (UnauthorizedException e) {
             e.printStackTrace();
+            resp.setStatus(401);
             gson.toJson(new ExceptionResponse(401, e), resp.getWriter());
         } catch (Exception e) {
             e.printStackTrace();
+            resp.setStatus(500);
             gson.toJson(new ExceptionResponse(500, e), resp.getWriter());
         }
         System.out.println("Out DashboardServlet POST");
@@ -72,9 +75,11 @@ public class DashboardServlet extends HttpServlet {
             gson.toJson(new DashboardResponse(book), resp.getWriter());
         } catch (UnauthorizedException e) {
             e.printStackTrace();
+            resp.setStatus(401);
             gson.toJson(new ExceptionResponse(401, e), resp.getWriter());
         } catch (Exception e) {
             e.printStackTrace();
+            resp.setStatus(500);
             gson.toJson(new ExceptionResponse(500, e), resp.getWriter());
         }
         System.out.println("Out DashboardServlet DELETE");

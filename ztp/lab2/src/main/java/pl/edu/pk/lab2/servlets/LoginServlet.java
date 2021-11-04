@@ -33,11 +33,11 @@ public class LoginServlet extends HttpServlet {
         } catch (LoginException e) {
             e.printStackTrace();
             resp.setStatus(400);
-            gson.toJson(new ExceptionResponse(400, e));
+            gson.toJson(new ExceptionResponse(400, e), resp.getWriter());
         } catch (Exception e) {
             e.printStackTrace();
             resp.setStatus(500);
-            gson.toJson(new ExceptionResponse(500, e));
+            gson.toJson(new ExceptionResponse(500, e), resp.getWriter());
         }
     }
 
