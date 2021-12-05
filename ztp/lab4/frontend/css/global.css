@@ -16,3 +16,12 @@
 .padding-1rem {
     padding-bottom: 1rem;
 }
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+td {
+    width: 25%;
+}
