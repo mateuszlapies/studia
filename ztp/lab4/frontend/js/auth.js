@@ -9,7 +9,6 @@ function table() {
         "<th>Author</th>" +
         "<th>Year</th>" +
     "</tr>";
-    console.log(books);
     string += books.map((item) =>
         "<tr>" +
         "<td>" + item.title + "</td>" +
@@ -33,7 +32,9 @@ function setupEvents() {
 
 function add() {
     if(admin === true) {
-        document.getElementById("add").addEventListener("submit", (e) => {
+        let add = document.getElementById("add");
+        add.removeAttribute("style");
+        add.addEventListener("submit", (e) => {
             e.preventDefault();
             if(e.target.title.value !== "" && e.target.author.value !== "" && e.target.year.value !== "") {
                 request("POST", "http://localhost:8080/dashboard", JSON.stringify({title: e.target.title.value, author: e.target.author.value, year: e.target.year.value}))
@@ -49,7 +50,8 @@ function add() {
 function dashboard() {
     request("GET", "http://localhost:8080/dashboard")
         .then(r => JSON.parse(r))
-        .then(j => {books = j.books; table()});
+        .then(j => {books = j.books; table()})
+        .catch(() => logout());
     isAdmin();
     document.getElementById("logout").addEventListener("click", () => logout());
 }
