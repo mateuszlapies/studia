@@ -2,7 +2,7 @@ package pl.edu.pk.backend.responses;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.HttpStatus;
-import pl.edu.pk.backend.utils.Json;
+import pl.edu.pk.backend.utilities.Json;
 
 public class Response {
     public int code;

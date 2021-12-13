@@ -1,10 +1,10 @@
-package pl.edu.pk.backend.rest;
+package pl.edu.pk.backend.controllers;
 
 import com.mongodb.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.pk.backend.db.User;
-import pl.edu.pk.backend.db.UserRepo;
+import pl.edu.pk.backend.database.User;
+import pl.edu.pk.backend.database.UserRepo;
 import pl.edu.pk.backend.requests.CreateUser;
 import pl.edu.pk.backend.responses.Response;
 
