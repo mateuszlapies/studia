@@ -1,0 +1,25 @@
+services:
+  react:
+    image: react
+    ports:
+      - "3000:3000"
+    links:
+      - spring
+  spring:
+    image: spring
+    ports:
+      - "8080:8080"
+    links:
+      - mongo
+  mongo:
+    image: mongo
+    volumes:
+      - /data/configdb
+      - /data/db
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/nginx
