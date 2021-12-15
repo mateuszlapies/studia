@@ -1,22 +1,41 @@
 package pl.edu.pk.backend.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import pl.edu.pk.backend.services.UserDetailsServiceImpl;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import pl.edu.pk.backend.services.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class WebConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserServiceImpl userService;
 
-    public WebConfig(UserDetailsServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
+    public WebConfig(UserServiceImpl userDetailsService) {
+        this.userService = userDetailsService;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userService);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/up").permitAll()
+                .antMatchers(HttpMethod.GET, "/users/{id}").authenticated()
+                .and().httpBasic().and().cors().disable().csrf().disable();
+    }
+
+    @Bean
+    @SuppressWarnings("deprecation")
+    public static NoOpPasswordEncoder passwordEncoder() {
+        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 }

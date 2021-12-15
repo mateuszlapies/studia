@@ -1,27 +1,27 @@
 services:
-  react:
-    image: react
-    ports:
-      - "3000:3000"
-    links:
-      - spring
-  spring:
-    image: spring
-    ports:
-      - "8080:8080"
-    links:
-      - mongo
+#  react:
+#    image: react
+#    ports:
+#      - "3000:3000"
+#    links:
+#      - spring
+#    image: spring
+#    ports:
+#      - "8080:8080"
+#    links:
+#      - mongo
   mongo:
     image: mongo
     ports:
       - "27017:27017"
-    volumes:
-      - /data/configdb
-      - /data/db
-  nginx:
-    image: nginx
+  mongo-express:
+    image: mongo-express
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /etc/nginx
+      - "8081:8081"
+#  nginx:
+#    image: nginx
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#    volumes:
+#      - /etc/nginx

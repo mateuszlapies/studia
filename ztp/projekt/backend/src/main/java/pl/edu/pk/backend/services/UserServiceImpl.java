@@ -6,11 +6,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService {
 
     private final UserService userService;
 
-    public UserDetailsServiceImpl(UserService userService) {
+    public UserServiceImpl(UserService userService) {
         this.userService = userService;
     }
 

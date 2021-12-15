@@ -1,7 +1,5 @@
 package pl.edu.pk.lab2.beans;
 
-import java.io.Serializable;
-
 public class Book implements Comparable<Book> {
     public int id;
     public String title;
