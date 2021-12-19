@@ -1,0 +1,23 @@
+.login-container {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login {
+    width: 35vw;
+    text-align: center;
+}
+
+.login-margin {
+    margin-bottom: 1vh;
+}
+
+.login-margin-submit {
+    margin-top: 2vh;
+}
+
+form {
+    margin: 1rem;
+}

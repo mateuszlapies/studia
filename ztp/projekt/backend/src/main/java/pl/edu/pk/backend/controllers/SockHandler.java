@@ -1,22 +1,17 @@
 package pl.edu.pk.backend.controllers;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
-@Configuration
-@EnableWebSocketMessageBroker
-public class SockHandler implements WebSocketMessageBrokerConfigurer {
-
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
-    }
-
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chatwithbots").withSockJS();
+@Controller
+@EnableWebSocket
+public class SockHandler {
+    @SendTo("/sock/broker")
+    @MessageMapping("/sock/endpoint")
+    public String send(TextMessage msg) {
+        return msg.getPayload();
     }
 }

@@ -26,10 +26,15 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/sock/**").authenticated()
+                .and().httpBasic().and().cors().disable().csrf().disable();
         http.authorizeHttpRequests()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/up").permitAll()
                 .antMatchers(HttpMethod.GET, "/users/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/me").authenticated()
+                .antMatchers(HttpMethod.DELETE, "users/{id}").hasAnyRole("ADMIN")
                 .and().httpBasic().and().cors().disable().csrf().disable();
     }
 
