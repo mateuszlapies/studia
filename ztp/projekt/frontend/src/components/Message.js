@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import MessageType from "../enums/MessageTypes.json";
 import {
     MDBIcon,
@@ -12,7 +12,6 @@ import {
 import {MessageContext} from "../contexts/MessageContext";
 
 export default function Message() {
-    let [timeout, setT] = useState(undefined);
     let title = (type) => {
         switch(type) {
             default:
@@ -30,10 +29,8 @@ export default function Message() {
     return (
         <MessageContext.Consumer>
             {(message) => {
-                if(timeout)
-                    clearTimeout(timeout);
                 if(message.displayed)
-                    setT(setTimeout(() => message.setMessage({displayed: false}), 5000));
+                    setTimeout(() => message.setMessage({displayed: false}), 2000);
                 return (
                     <MDBModal show={message.displayed}>
                         <MDBModalDialog>

@@ -14,15 +14,16 @@ import {InfoContext} from "../contexts/InfoContext";
 import {MessageContext} from "../contexts/MessageContext";
 
 import "../styles/Login.css";
+import {Api} from "../config/Config";
 import MessageTypes from "../enums/MessageTypes.json";
 
-export default function Login(props) {
+export default function Login() {
     let [isLogin, setIsLogin] = useState(true);
 
     let onLogin = (e, user, info, message) => {
         e.preventDefault();
         let d = {user: e.target.user.value, pass: e.target.pass.value}
-        fetch("http://localhost:8080/me", {
+        fetch(Api + "me", {
             headers: {
                 "Authorization": "Basic " + btoa(d.user + ':' + d.pass)
             }
@@ -32,16 +33,13 @@ export default function Login(props) {
                 info({info: j.message});
                 user({user: d});
             })
-            .catch((e) => {
-                message({type: MessageTypes.ERROR, content: "Login failed: " + JSON.stringify(e), displayed: true})
-                document.getElementById('login').reset();
-            })
+            .catch((e) => message({type: MessageTypes.ERROR, content: "Login failed: " + JSON.stringify(e), displayed: true}))
     }
 
     let onRegister = (e, message) => {
         e.preventDefault();
         let d = {user: e.target.user.value, pass: e.target.pass.value}
-        fetch("http://localhost:8080/users", {
+        fetch(Api + "users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -50,12 +48,12 @@ export default function Login(props) {
         })
             .then((r) => {
                 if (r.ok) {
+                    message({type: MessageTypes.INFO, content: "Registration successful", displayed: true});
                     setIsLogin(true);
-                    message({type: MessageTypes.INFO, content: "Registration successful"});
-                }
+                } else
+                    throw new Error("Registration failed");
             })
-            .catch(() => message({type: MessageTypes.ERROR, content: "Registration failed: " + JSON.stringify(e), displayed: true}))
-            .finally(() => document.getElementById('register').reset())
+            .catch((e) => {message({type: MessageTypes.ERROR, content: e.message, displayed: true})});
     }
 
     return (

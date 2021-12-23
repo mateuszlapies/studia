@@ -9,3 +9,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.loading-container {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+}
+
+.offline-container {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.offline-icon {
+  margin: 1rem;
+}

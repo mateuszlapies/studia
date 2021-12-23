@@ -15,20 +15,23 @@ function App() {
   let [user, updateUser] = useState({
     user: sessionStorage.getItem("userpass") ? JSON.parse(sessionStorage.getItem("userpass")) : undefined,
     setUser: (d) => {
-        sessionStorage.setItem("userpass", JSON.stringify(d));
+        sessionStorage.setItem("userpass", JSON.stringify(d.user));
         updateUser(d);
     }
   });
   let [info, updateInfo] = useState({
     info: sessionStorage.getItem("info") ? JSON.parse(sessionStorage.getItem("info")) : undefined,
     setInfo: (d) => {
-        sessionStorage.setItem("info", JSON.stringify(d));
+        sessionStorage.setItem("info", JSON.stringify(d.info));
         updateInfo(d)
     }
   });
   let [message, updateMessage] = useState({
     message: {type: MessageType.INFO, content: "", displayed: true},
-    setMessage: (d) => updateMessage(d)
+    setMessage: (d) => {
+        d.setMessage = (d) => message.setMessage(d);
+        updateMessage(d);
+    }
   });
   return (
       <MessageContext.Provider value={message}>

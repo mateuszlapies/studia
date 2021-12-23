@@ -4,10 +4,13 @@ import './styles/index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css'
+import Verify from "./components/Verify";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Verify>
+      <App />
+    </Verify>
   </React.StrictMode>,
   document.getElementById('root')
 );

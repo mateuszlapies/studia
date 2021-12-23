@@ -18,7 +18,7 @@ export default function Header() {
     return (
         <MDBNavbar expand='lg' light bgColor='light'>
             <MDBContainer fluid>
-                <MDBNavbarBrand href='#'>Cards Against Humanity</MDBNavbarBrand>
+                <MDBNavbarBrand href='/'>Cards Against Humanity</MDBNavbarBrand>
 
                 <MDBNavbarToggler
                     aria-controls='navbarSupportedContent'
@@ -38,8 +38,8 @@ export default function Header() {
                                         <MDBNavbarItem>
                                             <MDBNavbarLink>
                                                 {context.info.user}
-                                                <MDBIcon fas icon='crown' className="ms-1" size='sm' color="gold" />
-                                                <MDBBadge color='danger' notification pill>
+                                                <MDBIcon fas icon='crown' className="ms-1" size='sm' />
+                                                <MDBBadge color='info' notification pill className="header-badge">
                                                     {context.info.history.length}
                                                 </MDBBadge>
                                             </MDBNavbarLink>

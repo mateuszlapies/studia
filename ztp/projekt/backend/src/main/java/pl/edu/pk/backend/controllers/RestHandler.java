@@ -1,5 +1,6 @@
 package pl.edu.pk.backend.controllers;
 
+import com.mongodb.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -53,6 +54,8 @@ public class RestHandler {
         try {
             users.save(new User(createUser));
             return new Response().get();
+        } catch (DuplicateKeyException e) {
+            return new Response(HttpStatus.BAD_REQUEST, "User already exists").get();
         } catch (Exception e) {
             return new Response(HttpStatus.INTERNAL_SERVER_ERROR, e).get();
         }
