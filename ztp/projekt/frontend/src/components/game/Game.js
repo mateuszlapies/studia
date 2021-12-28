@@ -1,25 +1,30 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SocketFactory from "../factory/SocketFactory";
+
+import "../../styles/Game.css";
+import Board from "./Board";
 
 export default function Game(props) {
     let [game, setGame] = useState({
-        card: undefined,
+        started: false,
         cezar: undefined,
-        players: [],
-        updateGame: (d) => {
-            d.updateGame = setGame;
-            setGame(d)
-        }
+        blackCard: undefined,
+        whiteCards: [],
+        players: []
     });
+    let [sock, setSock] = useState(undefined);
 
-    SocketFactory(props.user)
-        .then(r => {
-            if(!r.subscriptions.info)
-                r.subscribe("/sock/info", (f) => game.updateGame(JSON.parse(f.body)), {id: "info"});
-
-            //r.send("/info", {}, "");
-        });
+    useEffect(() => {
+        SocketFactory(props.user)
+            .then(r => {
+                if(!r.subscriptions.info)
+                    r.subscribe("/sock/info", (f) => setGame(JSON.parse(f.body)), {id: "info"});
+                r.send("/info", {}, "");
+                setSock(r);
+            })
+            .catch();
+    }, [props.user]);
     return (
-        <div/>
+        <Board game={game} user={props.user} sock={sock} />
     )
 }

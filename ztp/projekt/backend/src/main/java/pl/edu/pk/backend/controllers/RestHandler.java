@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.pk.backend.database.CardRepo;
 import pl.edu.pk.backend.database.User;
 import pl.edu.pk.backend.database.UserRepo;
 import pl.edu.pk.backend.requests.CreateUser;
@@ -12,13 +13,14 @@ import pl.edu.pk.backend.responses.Response;
 
 import java.util.Optional;
 
-@RestController()
-@CrossOrigin(origins = "http://localhost:3000")
+@RestController
+@CrossOrigin(origins = {"http://localhost:3000", "http://192.168.96.15:3000"})
 public class RestHandler {
     private final UserRepo users;
-
-    public RestHandler(UserRepo users) {
+    private final CardRepo cards;
+    public RestHandler(UserRepo users, CardRepo cards) {
         this.users = users;
+        this.cards = cards;
     }
 
     @GetMapping("/me")
@@ -40,7 +42,7 @@ public class RestHandler {
         try {
             Optional<User> user = users.findById(id);
             if(user.isPresent()) {
-                return new Response(HttpStatus.OK, user.get()).get();
+                return new Response(HttpStatus.OK, user.get().user).get();
             } else {
                 throw new Exception("User not found");
             }
@@ -74,5 +76,10 @@ public class RestHandler {
         } catch (Exception e) {
             return new Response(HttpStatus.BAD_REQUEST, e).get();
         }
+    }
+
+    @GetMapping("/cards/{id}")
+    public ResponseEntity<Response> GetCard(@PathVariable String id) {
+        return new Response(HttpStatus.OK, cards.findById(id)).get();
     }
 }

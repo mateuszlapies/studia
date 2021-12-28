@@ -29,7 +29,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http.authorizeHttpRequests()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
-                .antMatchers(HttpMethod.GET, "/users/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/users/{id}").permitAll()
+                .antMatchers(HttpMethod.GET, "/cards/{id}").permitAll()
                 .antMatchers(HttpMethod.GET, "/me").authenticated()
                 .antMatchers(HttpMethod.DELETE, "users/{id}").hasAnyRole("ADMIN")
                 .and().httpBasic().and().cors().disable().csrf().disable();
