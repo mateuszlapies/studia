@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {Api} from "../../config/Config";
-import {MDBBadge, MDBSpinner} from "mdb-react-ui-kit";
+import {MDBBadge, MDBCheckbox, MDBSpinner} from "mdb-react-ui-kit";
+import {SubmitContext} from "../../contexts/SubmitContext";
 
 export default function Card(props) {
     let [info, setInfo] = useState(undefined);
@@ -9,12 +10,13 @@ export default function Card(props) {
             .then((r) => r.json())
             .then((j) => setInfo(j.message));
     }, [props.card]);
+
     if(props.card) {
         if(info) {
             if(info.color === "b") {
                 return (
                     <div className="gcard b dark-card">
-                        <div>{info.text.replace("_", "___")}</div>
+                        <div>{info.text.replaceAll("_", "___")}</div>
                         <div className="dark-card-pick">
                             Pick <MDBBadge className="dark-card-blanks" color="light">{info.blanks}</MDBBadge>
                         </div>
@@ -22,9 +24,18 @@ export default function Card(props) {
                 )
             } else {
                 return (
-                    <div className="gcard w">
-                        <div>{info.text}</div>
-                    </div>
+                    <SubmitContext.Consumer>
+                        {(context) => {
+                            return (
+                                <div className={"gcard w" + (!props.cezar ? " clickable" : "")} onClick={() => context.changeList(props.blanks, props.card)}>
+                                    <div hidden={props.cezar} className="gcard-checkbox">
+                                        <MDBCheckbox type="checkbox" checked={context.list.indexOf(props.card) > -1} disabled/>
+                                    </div>
+                                    <div>{info.text}</div>
+                                </div>
+                            )
+                        }}
+                    </SubmitContext.Consumer>
                 )
             }
 

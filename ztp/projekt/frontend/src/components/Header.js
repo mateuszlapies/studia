@@ -54,12 +54,12 @@ export default function Header() {
                                     if(context.user)
                                         return (
                                             <MDBNavbarItem active={window.location.pathname === "/logout"}>
-                                                <MDBNavbarLink href='logout'>Logout</MDBNavbarLink>
+                                                <MDBNavbarLink href='logout'>logout</MDBNavbarLink>
                                             </MDBNavbarItem>
                                         )
                                     return (
                                         <MDBNavbarItem active={window.location.pathname === "/login"}>
-                                            <MDBNavbarLink href='/'>Login</MDBNavbarLink>
+                                            <MDBNavbarLink href='/'>login</MDBNavbarLink>
                                         </MDBNavbarItem>
                                     )
                                 }

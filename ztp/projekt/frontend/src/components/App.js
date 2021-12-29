@@ -29,7 +29,7 @@ function App() {
   let [message, updateMessage] = useState({
     message: {type: MessageType.INFO, content: "", displayed: true},
     setMessage: (d) => {
-        d.setMessage = (d) => message.setMessage(d);
+        d.setMessage = message.setMessage;
         updateMessage(d);
     }
   });

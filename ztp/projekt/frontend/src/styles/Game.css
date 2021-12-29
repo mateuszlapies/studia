@@ -1,68 +1,3 @@
-@import "https://fonts.googleapis.com/css?family=Droid+Sans+Mono";
-
-.stack {
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-.stack-container {
-    width: max-content;
-}
-
-.gcard {
-    text-align: left;
-    vertical-align: top;
-    word-wrap: break-word;
-    font-size: 1rem;
-    font-weight: bolder;
-    font-family: Helvetica,sans-serif;
-}
-
-.gcard-spinner {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-@media (max-width: 450px) {
-    .gcard {
-        width: 45vw;
-        height: 30vh;
-        margin: .5rem;
-        padding: 1rem;
-        border-style: solid;
-        border-radius: .5rem;
-        border-width: medium;
-        display: inline-block !important;
-    }
-}
-
-@media (min-width: 451px) {
-    .gcard {
-        width: 14vw;
-        height: 25vh;
-        margin: .5rem;
-        padding: 1rem;
-        border-style: solid;
-        border-radius: .5rem;
-        border-width: medium;
-        display: inline-block !important;
-    }
-}
-
-.gcard.w {
-    color: black;
-    background: white;
-    border-color: black;
-}
-
-.gcard.b {
-    color: white;
-    background: black;
-    border-color: white;
-}
-
 .player {
     padding: 1vh;
     display: inline-block;
@@ -99,4 +34,119 @@
 
 .dark-card-blanks {
     color: black !important;
+}
+
+.stack {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.stack-container {
+    width: max-content;
+}
+
+.end-stack {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.end-stack-container {
+    height: max-content;
+}
+
+.end-stack-sm-container {
+    text-align: center;
+    cursor: pointer;
+}
+
+.gcard {
+    text-align: left;
+    vertical-align: top;
+    word-wrap: break-word;
+    font-size: 1rem;
+    font-weight: bolder;
+    font-family: Helvetica,sans-serif;
+    margin: .5rem;
+    padding: 1rem;
+    border-style: solid;
+    border-radius: .5rem;
+    border-width: medium;
+    display: inline-block !important;
+    user-select: none;
+}
+
+.gcard-spinner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gcard-checkbox {
+    float: right;
+}
+
+.gcard.w {
+    color: black;
+    background: white;
+    border-color: black;
+}
+
+.gcard.w.clickable {
+    cursor: pointer;
+}
+
+.gcard.b {
+    color: white;
+    background: black;
+    border-color: white;
+}
+
+@media (max-width: 450px) {
+    .gcard {
+        width: 45vw;
+        height: 30vh;
+    }
+}
+
+@media (min-width: 451px) and (max-width: 750px) {
+    .gcard {
+        width: 25vw;
+        height: 25vh;
+    }
+}
+
+@media (min-width: 751px) and (max-width: 980px) {
+    .gcard {
+        width: 20vw;
+        height: 25vh;
+    }
+}
+
+@media (min-width: 981px) and (max-width: 1150px) {
+    .gcard {
+        width: 18vw;
+        height: 25vh;
+    }
+}
+
+@media (min-width: 1151px) and (max-width: 1300px) {
+    .gcard {
+        width: 16vw;
+        height: 25vh;
+    }
+}
+
+@media (min-width: 1301px) and (max-width: 1550px) {
+    .gcard {
+        width: 14vw;
+        height: 25vh;
+    }
+}
+
+@media (min-width: 1551px) {
+    .gcard {
+        width: 12vw;
+        height: 25vh;
+    }
 }

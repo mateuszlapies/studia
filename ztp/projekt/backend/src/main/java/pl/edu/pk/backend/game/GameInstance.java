@@ -2,26 +2,27 @@ package pl.edu.pk.backend.game;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
 public class GameInstance {
     public boolean started;
+    public boolean chosen;
     public String cezar;
+    public int blanks;
     public String blackCard;
-    public ArrayList<String> players;
+    public Hashtable<String, Integer> players;
     public List<List<String>> whiteCards;
 
     @JsonIgnore
-    private Dictionary<String, List<String>> _whiteCards;
+    private Hashtable<String, List<String>> _whiteCards;
     @JsonIgnore
-    public Dictionary<String, List<String>> playerCards;
+    public Hashtable<String, List<String>> playerCards;
 
     public GameInstance() {
         started = false;
-        players = new ArrayList<>();
+        chosen = false;
+        players = new Hashtable<>();
         set_whiteCards(new Hashtable<>());
         playerCards = new Hashtable<>();
     }
@@ -33,5 +34,9 @@ public class GameInstance {
     public void set_whiteCards(Hashtable<String, List<String>> dictionary) {
         this._whiteCards = dictionary;
         setWhiteCards(dictionary.values().stream().toList());
+    }
+
+    public Hashtable<String, List<String>> get_whiteCards() {
+        return _whiteCards;
     }
 }

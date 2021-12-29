@@ -1,19 +1,11 @@
+import "../../styles/Game.css";
+import Board from "./Board";
 import {useEffect, useState} from "react";
 import SocketFactory from "../factory/SocketFactory";
 
-import "../../styles/Game.css";
-import Board from "./Board";
-
 export default function Game(props) {
-    let [game, setGame] = useState({
-        started: false,
-        cezar: undefined,
-        blackCard: undefined,
-        whiteCards: [],
-        players: []
-    });
-    let [sock, setSock] = useState(undefined);
-
+    let [game, setGame] = useState(undefined);
+    let [sock, setSock] = useState(undefined)
     useEffect(() => {
         SocketFactory(props.user)
             .then(r => {
@@ -23,8 +15,13 @@ export default function Game(props) {
                 setSock(r);
             })
             .catch();
-    }, [props.user]);
-    return (
-        <Board game={game} user={props.user} sock={sock} />
-    )
+    }, [props.user, sock]);
+
+    if(game) {
+        return (
+            <Board game={game} sock={sock} user={props.user} />
+        )
+    } else
+        return <></>
+
 }
