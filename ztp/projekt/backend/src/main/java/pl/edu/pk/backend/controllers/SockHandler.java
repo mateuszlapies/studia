@@ -8,45 +8,53 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import pl.edu.pk.backend.database.Card;
 import pl.edu.pk.backend.database.CardRepo;
+import pl.edu.pk.backend.database.User;
+import pl.edu.pk.backend.database.UserRepo;
 import pl.edu.pk.backend.game.GameInstance;
+import pl.edu.pk.backend.game.GameParameters;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
 @EnableWebSocket
 public class SockHandler {
     private final GameInstance game;
+    private final List<String> queue;
     private final List<Card> blackCards;
     private final List<Card> whiteCards;
+    private final UserRepo userRepo;
 
-    public SockHandler(CardRepo cardRepo) {
+    public SockHandler(CardRepo cardRepo, UserRepo userRepo) {
         this.game = new GameInstance();
         this.blackCards = cardRepo.findAllByColor('b');
         this.whiteCards = cardRepo.findAllByColor('w');
+        this.userRepo = userRepo;
+        this.queue = new ArrayList<>();
     }
 
     @SendTo("/sock/info")
     @MessageMapping("/info")
     public GameInstance Receive(Principal user) {
         String id = user.getName();
-        if(!game.players.contains(id)) {
+        if(!game.players.containsKey(id)) {
+            queue.add(id);
             game.players.put(id, 0);
             if (game.players.size() == 1)
-                game.cezar = game.players.keySet().stream().toList().get(0);
+                game.cezar = queue.get(0);
         }
         return game;
     }
 
     @SendTo("/sock/info")
     @MessageMapping("/start")
-    public GameInstance Start(Principal user) {
+    public GameInstance Start(GameParameters parameters, Principal user) {
         String id = user.getName();
         if(!game.started && game.players.size() > 1) {
             if (game.cezar.equals(id)) {
+                game.parameters = parameters;
                 game.started = true;
                 Collections.shuffle(blackCards);
                 game.blanks = blackCards.get(0).blanks;
@@ -58,6 +66,7 @@ public class SockHandler {
                     game.playerCards.put(player, temp.stream().map(Card::getId).collect(Collectors.toList()));
                     whiteCards.removeAll(temp);
                 }
+                game.timestamp = Timestamp.from(new Date(System.currentTimeMillis() + 1000L * game.parameters.time).toInstant());
             }
         }
         return game;
@@ -96,15 +105,24 @@ public class SockHandler {
         if(user.getName().equals(game.cezar)) {
             String p = game.get_whiteCards().keySet().stream().toList().get(player);
             game.players.put(p, game.players.get(p) + 1);
+            if(game.players.get(p).equals(game.parameters.rounds)) {
+                game.ended = true;
+                Optional<User> opt = userRepo.findById(user.getName());
+                if(opt.isPresent()) {
+                    User usr = opt.get();
+                    usr.history++;
+                    userRepo.save(usr);
+                }
+            }
             game.get_whiteCards().clear();
             game.chosen = false;
-            List<String> players = game.players.keySet().stream().toList();
-            int index = players.indexOf(game.cezar) + 1;
-            int size = players.size();
-            game.cezar = players.get(index % size);
+            int index = queue.indexOf(game.cezar) + 1;
+            int size = queue.size();
+            game.cezar = queue.get(index % size);
             game.blanks = blackCards.get(0).blanks;
             game.blackCard = blackCards.get(0).id;
             blackCards.remove(0);
+            game.timestamp = Timestamp.from(new Date(System.currentTimeMillis() + 1000L * game.parameters.time).toInstant());
             return p;
         } else
             return "";

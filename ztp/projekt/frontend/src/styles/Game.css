@@ -16,6 +16,15 @@
     text-align: center;
 }
 
+.start-cezar {
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
+
+.start-elements {
+    padding: 1rem;
+}
+
 .dark-card {
     position: relative;
 }

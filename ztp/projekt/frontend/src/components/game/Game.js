@@ -2,6 +2,7 @@ import "../../styles/Game.css";
 import Board from "./Board";
 import {useEffect, useState} from "react";
 import SocketFactory from "../factory/SocketFactory";
+import Summary from "./Summary";
 
 export default function Game(props) {
     let [game, setGame] = useState(undefined);
@@ -18,10 +19,13 @@ export default function Game(props) {
     }, [props.user, sock]);
 
     if(game) {
-        return (
-            <Board game={game} sock={sock} user={props.user} />
-        )
+        if(game.ended) {
+            return <Summary game={game}/>
+        } else {
+            return (
+                <Board game={game} sock={sock} user={props.user} />
+            )
+        }
     } else
         return <></>
-
 }

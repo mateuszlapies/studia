@@ -1,6 +1,6 @@
 import {
     MDBBtn,
-    MDBCol,
+    MDBCol, MDBInput,
     MDBModal,
     MDBModalBody,
     MDBModalContent,
@@ -48,6 +48,7 @@ export default function Board(props) {
                     setId(undefined);
                     setSelected([]);
                     setSubmit({list: [], changeList: submit.changeList});
+                    setSubmitted(false);
                     message.setMessage({type: MessageType.WIN, content: f.body, displayed: true});
                     props.sock.send("/info", {}, "");
                 }, {id: "win"});
@@ -63,13 +64,14 @@ export default function Board(props) {
                         {
                             Object.keys(props.game.players).map((item, index) => <Player key={index} id={item} win={props.game.players[item]}
                                                                             sock={props.sock}
+                                                                            chosen={props.game.chosen}
                                                                             started={props.game.started}
                                                                             cezar={item === props.game.cezar}/>)
                         }
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
-                    <MDBCol><Timer timestamp={props.game.timer} /></MDBCol>
+                    <MDBCol><Timer chosen={props.game.chosen} timestamp={props.game.timestamp} /></MDBCol>
                 </MDBRow>
                 <MDBRow>
                     <MDBCol>
@@ -205,8 +207,22 @@ export default function Board(props) {
                                 if(context.info.id === props.game.cezar && Object.keys(props.game.players).length > 2)
                                 {
                                     return (
-                                        <div onClick={() => props.sock.send("/start")}>
-                                            <MDBBtn>Start ({Object.keys(props.game.players).length} players)</MDBBtn>
+                                        <div className="start-cezar">
+                                            <form onSubmit={(e) => {e.preventDefault(); props.sock.send("/start", {}, JSON.stringify({time: e.target.time.value, rounds: e.target.rounds.value}))}}>
+                                                <MDBRow>
+                                                    <MDBCol className="start-elements">
+                                                        <MDBInput className="start-elements" label='Time limit (seconds)' name="time" type='number' />
+                                                    </MDBCol>
+                                                    <MDBCol className="start-elements">
+                                                        <MDBInput  label='Round limit' name="rounds" type='number' />
+                                                    </MDBCol>
+                                                </MDBRow>
+                                                <MDBRow>
+                                                    <MDBCol className="start-elements">
+                                                        <MDBBtn  type="submit">Start ({Object.keys(props.game.players).length} players)</MDBBtn>
+                                                    </MDBCol>
+                                                </MDBRow>
+                                            </form>
                                         </div>
                                     )
                                 } else if(Object.keys(props.game.players).length > 2) {

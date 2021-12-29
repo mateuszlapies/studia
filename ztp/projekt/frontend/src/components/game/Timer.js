@@ -1,21 +1,21 @@
 import {useState} from "react";
 
 export default function Timer(props) {
-    let [time, setTime] = useState(props.timestamp - Date.now());
-    if(props.timestamp) {
-        let timeout = setTimeout(() => setTime(props.timestamp - Date.now()), 1);
-        if(time <= 0)
+    let [time, setTime] = useState(Date.parse(props.timestamp) - Date.now());
+    if(props.timestamp && !props.chosen) {
+        let timeout = setTimeout(() => setTime(Date.parse(props.timestamp) - Date.now()), 1000);
+        if(time < 0) {
             clearTimeout(timeout);
-        setTime(0);
+            setTime(0);
+        }
 
         function formatSeconds(secs) {
             function pad(n) {
                 return (n < 10 ? "0" + n : n);
             }
-            let h = Math.floor(secs / 3600);
-            let m = Math.floor(secs / 60) - (h * 60);
-            let s = Math.floor(secs - h * 3600 - m * 60);
-            return pad(m) +":"+ pad(s);
+            let m = Math.floor(secs / 60000);
+            let s = Math.floor(secs / 1000 - m * 60);
+            return pad(isNaN(m) ? 0 : m) + ":" + pad(isNaN(s) ? 0 : s);
         }
 
         return (

@@ -23,8 +23,7 @@ export default function Player(props) {
         } else {
             setSub(false);
         }
-    }, [props.sock, props.id]);
-
+    }, [props.sock, props.id, props.chosen]);
 
     return (
         <div className="player">

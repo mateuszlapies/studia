@@ -40,7 +40,7 @@ export default function Header() {
                                                 {context.info.user}
                                                 <MDBIcon fas icon='crown' className="ms-1" size='sm' />
                                                 <MDBBadge color='info' notification pill className="header-badge">
-                                                    {context.info.history.length}
+                                                    {context.info.history}
                                                 </MDBBadge>
                                             </MDBNavbarLink>
                                         </MDBNavbarItem>

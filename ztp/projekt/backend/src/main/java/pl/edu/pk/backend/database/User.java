@@ -24,7 +24,7 @@ public class User implements UserDetails {
     public String pass;
     @JsonIgnore
     public Role role;
-    public List<Game> history;
+    public int history;
 
     public User() {}
 
@@ -33,7 +33,7 @@ public class User implements UserDetails {
         this.role = Role.User;
         this.user = createUser.user;
         this.pass = createUser.pass;
-        this.history = new ArrayList<>();
+        this.history = 0;
     }
 
     @Override
