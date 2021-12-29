@@ -40,24 +40,25 @@ export default function Message() {
             case MessageType.WIN: {
                 fetch(Api + "users/" + message)
                     .then(r => r.json())
-                    .then(j => setDisplay(j.message.user));
+                    .then(j => setDisplay("The round is won by " + j.message));
                 break;
             }
         }
     }
+
     return (
         <MessageContext.Consumer>
-            {(message) => {
-                if(message.displayed) {
-                    content(message.type, message.content)
-                    setTimeout(() => message.setMessage({displayed: false}), 5000);
+            {(context) => {
+                if(context.message.displayed) {
+                    content(context.message.type, context.message.content)
+                    setTimeout(() => context.setMessage({displayed: false}), 3000);
                 }
                 return (
-                    <MDBModal show={message.displayed}>
+                    <MDBModal show={context.message.displayed}>
                         <MDBModalDialog>
                             <MDBModalContent>
                                 <MDBModalHeader>
-                                    <MDBModalTitle>{icon(message.type)}{title(message.type)}</MDBModalTitle>
+                                    <MDBModalTitle>{icon(context.message.type)}{title(context.message.type)}</MDBModalTitle>
                                 </MDBModalHeader>
                                 <MDBModalBody>
                                     {display}

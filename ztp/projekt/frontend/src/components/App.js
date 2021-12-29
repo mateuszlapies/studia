@@ -27,10 +27,10 @@ function App() {
     }
   });
   let [message, updateMessage] = useState({
-    message: {type: MessageType.INFO, content: "", displayed: true},
+    message: {type: MessageType.INFO, content: "", displayed: false},
     setMessage: (d) => {
-        d.setMessage = message.setMessage;
-        updateMessage(d);
+        let obj = {message: d, setMessage: message.setMessage}
+        updateMessage(obj);
     }
   });
   return (
