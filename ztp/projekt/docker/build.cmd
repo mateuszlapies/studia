@@ -1,2 +1,2 @@
-docker build --target spring -t spring .
-docker build --target react -t react .
+docker build -f Dockerfile.spring -t spring .
+docker build -f Dockerfile.react -t react .

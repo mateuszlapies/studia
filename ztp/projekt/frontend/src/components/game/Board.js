@@ -29,12 +29,14 @@ export default function Board(props) {
                 if(b > list.length)
                     list.push(d);
             }
-            setSubmit({list: list, changeList: submit.changeList});
+            setSubmit({list: list, changeList: submit.changeList, clearList: submit.clearList});
+        },
+        clearList: () => {
+            setSubmit({list: [], changeList: submit.changeList, clearList: submit.clearList});
         }
     });
     let [submitted, setSubmitted] = useState(false);
     let [selected, setSelected] = useState([]);
-    let [selectedId, setId] = useState(undefined);
     const message = useContext(MessageContext);
 
     useEffect(() => {
@@ -45,16 +47,15 @@ export default function Board(props) {
                 }, {id: "cards"});
             if(!props.sock.subscriptions.win)
                 props.sock.subscribe("/sock/win", (f) => {
-                    setId(undefined);
+                    submit.clearList();
                     setSelected([]);
-                    setSubmit({list: [], changeList: submit.changeList});
                     setSubmitted(false);
                     message.setMessage({type: MessageType.WIN, content: f.body, displayed: true});
                     props.sock.send("/info", {}, "");
                 }, {id: "win"});
             props.sock.send("/cards", {}, "");
         }
-    }, [props.game, props.sock, submit.changeList, message])
+    }, [props.game, props.sock, submit.changeList, message, submit])
 
     if(props.game.started) {
         return (
@@ -71,7 +72,14 @@ export default function Board(props) {
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
-                    <MDBCol><Timer chosen={props.game.chosen} timestamp={props.game.timestamp} /></MDBCol>
+                    <MDBCol>
+                        <InfoContext.Consumer>
+                            {(context) => (
+                                <Timer chosen={props.game.chosen} timestamp={props.game.timestamp}
+                                       sock={props.sock} cezar={context.info.id === props.game.cezar}/>
+                            )}
+                        </InfoContext.Consumer>
+                    </MDBCol>
                 </MDBRow>
                 <MDBRow>
                     <MDBCol>
@@ -91,7 +99,7 @@ export default function Board(props) {
                                                     <div className="end-stack-container">
                                                         {props.game.whiteCards.map((item, index) => (
                                                             <div id={index} key={index} className="end-stack-sm-container"
-                                                                 onClick={() => {setSelected(item); setId(index);}}>
+                                                                 onClick={() => setSelected(item)}>
                                                                 {item.map((it, id) => <Card key={id} card={it} cezar={true}/>)}
                                                             </div>)
                                                         )}
@@ -178,7 +186,7 @@ export default function Board(props) {
                                     </MDBCol>
                                     <MDBCol>
                                         <MDBBtn onClick={() => {
-                                            props.sock.send("/select", {}, selectedId);
+                                            props.sock.send("/select", {}, JSON.stringify(selected));
                                             setSelected([]);
                                         }}>Confirm</MDBBtn>
                                     </MDBCol>
