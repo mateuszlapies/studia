@@ -20,7 +20,7 @@ public class GameInstance {
     @JsonIgnore
     public GameParameters parameters;
     @JsonIgnore
-    private Hashtable<String, List<String>> _whiteCards;
+    private Hashtable<List<String>, String> _whiteCards;
     @JsonIgnore
     public Hashtable<String, List<String>> playerCards;
 
@@ -37,12 +37,12 @@ public class GameInstance {
         this.whiteCards = values;
     }
 
-    public void set_whiteCards(Hashtable<String, List<String>> dictionary) {
+    public void set_whiteCards(Hashtable<List<String>, String> dictionary) {
         this._whiteCards = dictionary;
-        setWhiteCards(dictionary.values().stream().toList());
+        setWhiteCards(dictionary.keySet().stream().toList());
     }
 
-    public Hashtable<String, List<String>> get_whiteCards() {
+    public Hashtable<List<String>, String> get_whiteCards() {
         return _whiteCards;
     }
 }

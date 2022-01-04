@@ -15,6 +15,7 @@ import pl.edu.pk.backend.game.GameParameters;
 
 import java.security.Principal;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,7 @@ public class SockHandler {
     @MessageMapping("/info")
     public GameInstance Receive(Principal user) {
         String id = user.getName();
-        if(!game.players.containsKey(id)) {
+        if(!game.players.containsKey(id) && !queue.contains(id)) {
             queue.add(id);
             game.players.put(id, 0);
             if (game.players.size() == 1)
@@ -88,10 +89,10 @@ public class SockHandler {
     @SendTo("/sock/submitted")
     @MessageMapping("/submitted")
     public String SubmittedCard(@Payload List<String> cards, Principal user) {
-        Hashtable<String, List<String>> whiteCards = game.get_whiteCards();
+        Hashtable<List<String>, String> whiteCards = game.get_whiteCards();
         if(whiteCards.get(user.getName()) == null) {
             game.playerCards.get(user.getName()).removeAll(cards);
-            whiteCards.put(user.getName(), cards);
+            whiteCards.put(cards, user.getName());
             game.set_whiteCards(whiteCards);
             if(whiteCards.size() == game.players.size() - 1)
                 game.chosen = true;
@@ -101,9 +102,9 @@ public class SockHandler {
 
     @SendTo("/sock/win")
     @MessageMapping("/select")
-    public String SelectCard(@Payload int player, Principal user) {
+    public String SelectCard(@Payload List<String> cards, Principal user) {
         if(user.getName().equals(game.cezar)) {
-            String p = game.get_whiteCards().keySet().stream().toList().get(player);
+            String p = game.get_whiteCards().get(cards);
             game.players.put(p, game.players.get(p) + 1);
             if(game.players.get(p).equals(game.parameters.rounds)) {
                 game.ended = true;
@@ -126,5 +127,18 @@ public class SockHandler {
             return p;
         } else
             return "";
+    }
+
+    @SendTo("/sock/info")
+    @MessageMapping("/timeout")
+    public GameInstance Timeout(Principal user) throws Exception {
+        if(user.getName().equals(game.cezar)) {
+            if(game.timestamp.before(Timestamp.from(Instant.now()))) {
+                game.chosen = true;
+                return game;
+            }
+            throw new Exception("Time still left");
+        }
+        throw new Exception("Not a cezar");
     }
 }
