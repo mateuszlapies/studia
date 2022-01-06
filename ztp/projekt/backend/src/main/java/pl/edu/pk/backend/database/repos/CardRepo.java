@@ -1,6 +1,7 @@
-package pl.edu.pk.backend.database;
+package pl.edu.pk.backend.database.repos;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import pl.edu.pk.backend.database.Card;
 
 import java.util.List;
 

@@ -1,13 +1,16 @@
 package pl.edu.pk.backend.controllers;
 
 import com.mongodb.DuplicateKeyException;
+import org.springframework.boot.SpringApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.pk.backend.database.CardRepo;
+import pl.edu.pk.backend.CahApplication;
+import pl.edu.pk.backend.database.Card;
+import pl.edu.pk.backend.database.repos.CardRepo;
 import pl.edu.pk.backend.database.User;
-import pl.edu.pk.backend.database.UserRepo;
+import pl.edu.pk.backend.database.repos.UserRepo;
 import pl.edu.pk.backend.requests.CreateUser;
 import pl.edu.pk.backend.responses.Response;
 
@@ -80,6 +83,20 @@ public class RestHandler {
 
     @GetMapping("/cards/{id}")
     public ResponseEntity<Response> GetCard(@PathVariable String id) {
-        return new Response(HttpStatus.OK, cards.findById(id)).get();
+        try {
+            Optional<Card> card = cards.findById(id);
+            if(card.isPresent()) {
+                return new Response(HttpStatus.OK, card.get()).get();
+            } else {
+                throw new Exception("User not found");
+            }
+        } catch (Exception e) {
+            return new Response(HttpStatus.BAD_REQUEST, e).get();
+        }
+    }
+
+    @GetMapping("/restart")
+    public void Restart() {
+        CahApplication.restart();
     }
 }

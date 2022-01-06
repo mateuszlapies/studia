@@ -7,9 +7,9 @@ import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import pl.edu.pk.backend.database.Card;
-import pl.edu.pk.backend.database.CardRepo;
+import pl.edu.pk.backend.database.repos.CardRepo;
 import pl.edu.pk.backend.database.User;
-import pl.edu.pk.backend.database.UserRepo;
+import pl.edu.pk.backend.database.repos.UserRepo;
 import pl.edu.pk.backend.game.GameInstance;
 import pl.edu.pk.backend.game.GameParameters;
 

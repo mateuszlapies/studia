@@ -3,12 +3,9 @@ package pl.edu.pk.backend.services;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import pl.edu.pk.backend.database.User;
-import pl.edu.pk.backend.database.UserRepo;
-
-import java.util.Collections;
+import pl.edu.pk.backend.database.repos.UserRepo;
 
 @Component
 public class WebSocketService {

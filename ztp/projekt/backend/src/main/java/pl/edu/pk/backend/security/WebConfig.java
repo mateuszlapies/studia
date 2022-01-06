@@ -32,7 +32,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/users/{id}").permitAll()
                 .antMatchers(HttpMethod.GET, "/cards/{id}").permitAll()
                 .antMatchers(HttpMethod.GET, "/me").authenticated()
-                .antMatchers(HttpMethod.DELETE, "users/{id}").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/users/{id}").hasRole("Admin")
+                .antMatchers(HttpMethod.POST, "/restart").hasRole("Admin")
                 .and().httpBasic().and().cors().disable().csrf().disable();
     }
 

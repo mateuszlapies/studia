@@ -2,7 +2,7 @@ package pl.edu.pk.backend.services;
 
 import org.springframework.stereotype.Service;
 import pl.edu.pk.backend.database.User;
-import pl.edu.pk.backend.database.UserRepo;
+import pl.edu.pk.backend.database.repos.UserRepo;
 
 @Service
 public class UserService {
