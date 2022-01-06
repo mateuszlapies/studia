@@ -28,3 +28,7 @@ code {
 .offline-icon {
   margin: 1rem;
 }
+
+.header-restart {
+  width: 5vw;
+}

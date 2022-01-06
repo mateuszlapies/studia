@@ -53,18 +53,32 @@ export default function Header() {
                                 (context) => {
                                     if(context.user)
                                         return (
-                                            <MDBNavbarItem active={window.location.pathname === "/logout"}>
-                                                <MDBNavbarLink href='logout'>logout</MDBNavbarLink>
+                                            <MDBNavbarItem>
+                                                <MDBNavbarLink href='logout'><MDBIcon fas icon="sign-out-alt" className="ms-3 me-1" />logout</MDBNavbarLink>
                                             </MDBNavbarItem>
                                         )
                                     return (
-                                        <MDBNavbarItem active={window.location.pathname === "/login"}>
-                                            <MDBNavbarLink href='/'>login</MDBNavbarLink>
+                                        <MDBNavbarItem>
+                                            <MDBNavbarLink href='/'><MDBIcon fas icon="sign-in-alt" className="me-1" />login</MDBNavbarLink>
                                         </MDBNavbarItem>
                                     )
                                 }
                             }
                         </UserContext.Consumer>
+                    </MDBNavbarNav>
+                    <MDBNavbarNav right fullWidth={false}>
+                        <InfoContext.Consumer>
+                            {
+                                (context) => {
+                                    if(context.info && context.info.role === "Admin")
+                                        return (
+                                            <MDBNavbarItem className="header-restart">
+                                                <MDBNavbarLink href='/restart'><MDBIcon fas icon="redo" className="me-1" />restart</MDBNavbarLink>
+                                            </MDBNavbarItem>
+                                        )
+                                }
+                            }
+                        </InfoContext.Consumer>
                     </MDBNavbarNav>
                 </MDBCollapse>
             </MDBContainer>

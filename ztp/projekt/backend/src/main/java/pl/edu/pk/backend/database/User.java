@@ -22,7 +22,6 @@ public class User implements UserDetails {
     public String user;
     @JsonIgnore
     public String pass;
-    @JsonIgnore
     public Role role;
     public int history;
 

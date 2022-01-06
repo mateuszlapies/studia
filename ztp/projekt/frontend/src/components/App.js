@@ -13,16 +13,16 @@ import Message from "./Message";
 
 function App() {
   let [user, updateUser] = useState({
-    user: sessionStorage.getItem("userpass") ? JSON.parse(sessionStorage.getItem("userpass")) : undefined,
+    user: window.sessionStorage.getItem("userpass") ? JSON.parse(window.sessionStorage.getItem("userpass")) : undefined,
     setUser: (d) => {
-        sessionStorage.setItem("userpass", JSON.stringify(d.user));
+        window.sessionStorage.setItem("userpass", JSON.stringify(d.user));
         updateUser(d);
     }
   });
   let [info, updateInfo] = useState({
-    info: sessionStorage.getItem("info") ? JSON.parse(sessionStorage.getItem("info")) : undefined,
+    info: window.sessionStorage.getItem("info") ? JSON.parse(window.sessionStorage.getItem("info")) : undefined,
     setInfo: (d) => {
-        sessionStorage.setItem("info", JSON.stringify(d.info));
+        window.sessionStorage.setItem("info", JSON.stringify(d.info));
         updateInfo(d)
     }
   });
