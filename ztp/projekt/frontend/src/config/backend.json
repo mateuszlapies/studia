@@ -1,10 +1,10 @@
 {
   "dev": {
-    "api": "http://192.168.96.15:8080/",
-    "ws": "ws://192.168.96.15:8080/"
+    "api": "http://localhost:8080/",
+    "ws": "ws://localhost:8080/"
   },
   "prod": {
-    "api": "",
-    "ws": ""
+    "api": "http://host-ip:8080/",
+    "ws": "ws://host-ip:8080/"
   }
 }

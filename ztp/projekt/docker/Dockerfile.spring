@@ -4,5 +4,5 @@ RUN git clone https://github.com/mateuszlapies/studia.git
 WORKDIR studia/ztp/projekt/backend
 RUN mv src/main/resources/application.properties.docker src/main/resources/application.properties
 RUN chmod u+x mvnw
-RUN ./mvnw package
+RUN ./mvnw package -Dmaven.test.skip
 ENTRYPOINT ["java", "-jar", "target/backend-dev.jar"]
