@@ -1,3 +1,5 @@
 #/bin/ash
+echo "Initialization started IP: ${HOST_IP}"
+pwd
 sed -i "s/host-ip/${HOST_IP}/g" src/config/backend.json
 serve -s build

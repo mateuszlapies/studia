@@ -1,4 +1,6 @@
 #/bin/ash
+echo "Initialization started IP: ${HOST_IP}"
+pwd
 sed -i "s/host-ip/${HOST_IP}/g" src/main/resources/application.properties.docker
 sed -i "s/host-ip/${HOST_IP}/g" src/main/java/pl/edu/pk/backend/security/SockConfig.java
 sed -i "s/host-ip/${HOST_IP}/g" src/main/java/pl/edu/pk/backend/controllers/RestHandler.java
