@@ -17,7 +17,7 @@ import pl.edu.pk.backend.responses.Response;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "http://192.168.0.115:3000"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://host-ip:3000"})
 public class RestHandler {
     private final UserRepo users;
     private final CardRepo cards;
