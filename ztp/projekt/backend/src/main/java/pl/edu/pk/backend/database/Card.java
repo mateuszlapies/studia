@@ -2,7 +2,6 @@ package pl.edu.pk.backend.database;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import pl.edu.pk.backend.database.enums.Color;
 
 @Document
 public class Card {
@@ -10,7 +9,7 @@ public class Card {
     public String id;
     public String text;
     public int blanks;
-    public Color color;
+    public char color;
 
     public String getId() {
         return id;
