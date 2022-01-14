@@ -25,11 +25,7 @@ services:
     links:
       - mongo
   mongo:
-    build: 
-        context: .
-        cache_from:
-          - mongo
-        dockerfile: Dockerfile.mongo
+    image: mongo
     hostname: mongo
     ports:
       - "27017:27017"

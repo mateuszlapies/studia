@@ -1,4 +1,0 @@
-FROM mongo:latest as mongo
-COPY cards.json .
-RUN mongoimport --db cah --collection card --file cards.json
-RUN rm cards.json
