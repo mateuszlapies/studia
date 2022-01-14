@@ -7,4 +7,4 @@ RUN chmod u+x init.spring
 RUN chmod u+x mvnw
 RUN ./mvnw package -Dmaven.test.skip
 ENV HOST_IP=localhost
-ENTRYPOINT ["init.spring"]
+ENTRYPOINT ["/bin/ash", "init.spring"]
