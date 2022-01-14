@@ -1,5 +1,5 @@
 server.port=8080
-spring.data.mongodb.uri=mongodb://docker_mongo_1/cah
+spring.data.mongodb.uri=mongodb://mongo/cah
 spring.data.mongodb.auto-index-creation=true
 management.endpoints.enabled-by-default=false
 management.endpoint.health.enabled=true
