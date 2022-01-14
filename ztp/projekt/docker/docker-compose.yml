@@ -9,7 +9,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-        HOST_IP: "192.168.96.15"
+        HOST_IP: "localhost"
     links:
       - spring
   spring:
@@ -21,7 +21,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-        HOST_IP: "192.168.96.15"
+        HOST_IP: "localhost"
     links:
       - mongo
   mongo:
