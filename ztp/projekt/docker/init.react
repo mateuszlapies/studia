@@ -1,3 +1,3 @@
-#/bin/ash
-sed -i "s/host-ip/${HOST_IP}/g" src/config/backend.json
+sed -i "s/host-ip/${HOST_IP}/g" "src/config/backend.json"
+npm run build
 serve -s build

@@ -8,4 +8,4 @@ RUN npm install
 RUN npm run build
 RUN npm install -g serve
 ENV HOST_IP=localhost
-ENTRYPOINT ["/bin/ash", "init.react"]
+ENTRYPOINT ["/bin/sh", "init.react"]
