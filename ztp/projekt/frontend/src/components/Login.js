@@ -33,7 +33,7 @@ export default function Login() {
                 info({info: j.message});
                 user({user: d});
             })
-            .catch((e) => message({type: MessageTypes.ERROR, content: "Login failed: " + JSON.stringify(e), displayed: true}))
+            .catch((e) => message({type: MessageTypes.ERROR, content: "Login failed", displayed: true}))
     }
 
     let onRegister = (e, message) => {
