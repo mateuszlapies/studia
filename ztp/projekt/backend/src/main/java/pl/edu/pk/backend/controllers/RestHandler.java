@@ -17,13 +17,19 @@ import pl.edu.pk.backend.responses.Response;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "http://host-ip:3000"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://192.168.0.115:3000"})
 public class RestHandler {
     private final UserRepo users;
     private final CardRepo cards;
+
     public RestHandler(UserRepo users, CardRepo cards) {
         this.users = users;
         this.cards = cards;
+    }
+
+    @GetMapping("/restart")
+    public void Restart() {
+        CahApplication.restart();
     }
 
     @GetMapping("/me")
@@ -93,10 +99,5 @@ public class RestHandler {
         } catch (Exception e) {
             return new Response(HttpStatus.BAD_REQUEST, e).get();
         }
-    }
-
-    @GetMapping("/restart")
-    public void Restart() {
-        CahApplication.restart();
     }
 }

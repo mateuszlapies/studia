@@ -1,4 +1,4 @@
-package pl.edu.pk.backend.database;
+package pl.edu.pk.backend.database.enums;
 
 public enum Role {
     User,

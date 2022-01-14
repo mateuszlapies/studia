@@ -1,25 +1,31 @@
+version: "3.9"
 services:
   react:
-    image: react
+    build: 
+        context: .
+        cache_from:
+          - react
+        dockerfile: Dockerfile.react        
     ports:
       - "3000:3000"
+    environment:
+        HOST_IP: "192.168.96.15"
     links:
       - spring
   spring:
-    image: spring
+    build:
+        context: .
+        cache_from:
+          - spring
+        dockerfile: Dockerfile.spring
     ports:
       - "8080:8080"
+    environment:
+        HOST_IP: "192.168.96.15"
     links:
       - mongo
   mongo:
     image: mongo
+    hostname: mongo
     ports:
       - "27017:27017"
-  mongo-express:
-    image: mongo-express
-    ports:
-      - "8081:8081"
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=docker_mongo_1
-    links:
-      - mongo

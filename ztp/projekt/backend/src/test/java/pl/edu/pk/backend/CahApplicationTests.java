@@ -6,7 +6,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pl.edu.pk.backend.database.Card;
-import pl.edu.pk.backend.database.Role;
+import pl.edu.pk.backend.database.enums.Role;
 import pl.edu.pk.backend.database.User;
 import pl.edu.pk.backend.database.repos.CardRepo;
 import pl.edu.pk.backend.database.repos.UserRepo;

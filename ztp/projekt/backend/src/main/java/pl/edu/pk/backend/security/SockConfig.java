@@ -28,7 +28,7 @@ public class SockConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/sock/endpoint").setAllowedOrigins("http://localhost:3000", "http://host-ip:3000");
-        registry.addEndpoint("/sock/endpoint").setAllowedOrigins("http://localhost:3000", "http://host-ip:3000").withSockJS();
+        registry.addEndpoint("/sock/endpoint").setAllowedOrigins("http://localhost:3000", "http://192.168.0.115:3000");
+        registry.addEndpoint("/sock/endpoint").setAllowedOrigins("http://localhost:3000", "http://192.168.0.115:3000").withSockJS();
     }
 }

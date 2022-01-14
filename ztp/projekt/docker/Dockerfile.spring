@@ -2,7 +2,11 @@ FROM openjdk:17-alpine as spring
 RUN apk add git
 RUN git clone https://github.com/mateuszlapies/studia.git
 WORKDIR studia/ztp/projekt/backend
-RUN mv src/main/resources/application.properties.docker src/main/resources/application.properties
 RUN chmod u+x mvnw
 RUN ./mvnw package -Dmaven.test.skip
+ENV HOST_IP=localhost
+CMD sed -i "s/host-ip/${HOST_IP}/g" src/main/resources/application.properties.docker
+CMD sed -i "s/host-ip/${HOST_IP}/g" src/main/java/pl/edu/pk/backend/security/SockConfig.java
+CMD sed -i "s/host-ip/${HOST_IP}/g" src/main/java/pl/edu/pk/backend/controllers/RestHandler.java
+CMD mv src/main/resources/application.properties.docker src/main/resources/application.properties
 ENTRYPOINT ["java", "-jar", "target/backend-dev.jar"]

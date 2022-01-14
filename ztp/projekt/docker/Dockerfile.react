@@ -3,4 +3,8 @@ RUN apk add git
 RUN git clone https://github.com/mateuszlapies/studia.git
 WORKDIR studia/ztp/projekt/frontend
 RUN npm install
-ENTRYPOINT ["npm", "start"]
+RUN npm run build
+RUN npm install -g serve
+ENV HOST_IP=localhost
+CMD sed -i "s/host-ip/${HOST_IP}/g" src/config/backend.json
+ENTRYPOINT ["serve", "-s", "build"]

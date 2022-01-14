@@ -27,10 +27,10 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
-                .antMatchers(HttpMethod.GET, "/users/{id}").permitAll()
-                .antMatchers(HttpMethod.GET, "/cards/{id}").permitAll()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.GET, "/users/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/cards/{id}").authenticated()
                 .antMatchers(HttpMethod.GET, "/me").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/users/{id}").hasRole("Admin")
                 .antMatchers(HttpMethod.POST, "/restart").hasRole("Admin")
