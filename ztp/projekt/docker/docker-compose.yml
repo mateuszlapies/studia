@@ -5,7 +5,7 @@ services:
         context: .
         cache_from:
           - react
-        dockerfile: Dockerfile.react        
+        dockerfile: Dockerfile.react
     ports:
       - "3000:3000"
     environment:
@@ -25,7 +25,11 @@ services:
     links:
       - mongo
   mongo:
-    image: mongo
+    build: 
+        context: .
+        cache_from:
+          - mongo
+        dockerfile: Dockerfile.mongo
     hostname: mongo
     ports:
       - "27017:27017"
