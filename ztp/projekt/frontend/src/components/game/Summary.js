@@ -1,4 +1,4 @@
-import {MDBCol, MDBRow} from "mdb-react-ui-kit";
+import {MDBCol, MDBIcon, MDBRow} from "mdb-react-ui-kit";
 import {useEffect, useState} from "react";
 import {Api} from "../../config/Config";
 
@@ -20,19 +20,16 @@ export default function Summary(props) {
 
     return (
         <>
-            <MDBRow>
-                <MDBCol/>
+            <MDBRow style={{"text-align": "center", "padding-top": "1rem"}}>
                     <MDBCol>
+                        <div><MDBIcon size="fa-10x" fas icon="trophy"/></div>
                         <div>Game over!</div>
                     </MDBCol>
-                <MDBCol/>
             </MDBRow>
-            <MDBRow>
-                <MDBCol/>
+            <MDBRow style={{"text-align": "center"}}>
                 <MDBCol>
-                    <div>The winner is {winner}</div>
+                    <div>and the winner is {winner}!</div>
                 </MDBCol>
-                <MDBCol/>
             </MDBRow>
         </>
     );
