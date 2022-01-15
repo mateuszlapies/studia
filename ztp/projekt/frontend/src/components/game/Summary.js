@@ -22,7 +22,7 @@ export default function Summary(props) {
         <>
             <MDBRow style={{"text-align": "center", "padding-top": "1rem"}}>
                     <MDBCol>
-                        <div><MDBIcon size="fa-10x" fas icon="trophy"/></div>
+                        <div><MDBIcon size="10x" fas icon="trophy"/></div>
                         <div style={{"padding": ".5rem"}}>Game over</div>
                     </MDBCol>
             </MDBRow>
