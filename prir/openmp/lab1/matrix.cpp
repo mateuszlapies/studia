@@ -7,9 +7,9 @@ int main() {
     omp_set_num_threads(4);
     srand(time(NULL));
 
-    int N = 400;
-    int M = 300;
-    int P = 300;
+    int N = 4;
+    int M = 3;
+    int P = 3;
 
     int main [N][M];
     int multi [M][P];
@@ -35,16 +35,21 @@ int main() {
     }
     printf("\n");
     double time = omp_get_wtime();
-    int row;
-    #pragma omp parallel for private(row)
-    for (row = 0; row < N; row++) {
-        for(int column = 0; column < P; column++) {
-            for(int m = 0; m < M; m++) {
-                output[row][column] += main[row][m] * multi[m][column];
+    int i,j,k;
+    #pragma omp parallel for private(i)
+    for(i = 0; i < N; i++) {
+        for(j = 0; j < P; j++) {
+            for(k = 0; k < M; k++) {
+                output[i][j] += main[i][k] * multi[k][j];
             }
-            printf("%i\t", output[row][column]);
+        }
+    }
+    printf("time: %f\n\n", omp_get_wtime() - time);
+
+    for(i = 0; i < N; i++) {
+        for(j = 0; j < P; j++) {
+            printf("%i\t", output[i][j]);
         }
         printf("\n");
     }
-    printf("time: %f\n", omp_get_wtime() - time);
 }
