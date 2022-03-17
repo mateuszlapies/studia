@@ -1,26 +1,35 @@
 #include <omp.h>
 #include <stdio.h>
-#include <math.h>
 
-void strategy_non_reduction(int iterations) {
-    int i; double sum = 0;
-    #pragma omp parallel for
-    for(i=0;i<iterations;i++){ sum += pow(2,2); }
+void strategy_a(int iterations) {
+    int i;
+    #pragma omp parallel for schedule(static,3)
+    for(i=0;i<iterations;i++){ printf("thread %d, index %d\n",omp_get_thread_num(),i); }
 }
 
-void strategy_reduction(int iterations) {
-    int i; double sum = 0;
-    #pragma omp parallel for reduction(+:sum)
-    for (i = 0; i < iterations; i++) { sum += pow(2, 2); }
+void strategy_b(int iterations) {
+    int i;
+    #pragma omp parallel for schedule(static)
+    for(i=0;i<iterations;i++){ printf("thread %d, index %d\n",omp_get_thread_num(),i); }
+}
+
+void strategy_c(int iterations) {
+    int i;
+    #pragma omp parallel for schedule(dynamic,3)
+    for(i=0;i<iterations;i++){ printf("thread %d, index %d\n",omp_get_thread_num(),i); }
+}
+
+void strategy_d(int iterations) {
+    int i;
+    #pragma omp parallel for schedule(dynamic)
+    for(i=0;i<(iterations);i++){ printf("thread %d, index %d\n",omp_get_thread_num(),i); }
 }
 
 int main() {
-    int iterations = 5000;
+    int iterations = 15;
     omp_set_num_threads(4);
-    double start_time = omp_get_wtime();
-    strategy_non_reduction(iterations);
-    printf("a: %f\n", omp_get_wtime() - start_time);
-    start_time = omp_get_wtime();
-    strategy_reduction(iterations);
-    printf("b: %f\n", omp_get_wtime() - start_time);
+    strategy_a(iterations);
+    strategy_b(iterations);
+    strategy_c(iterations);
+    strategy_d(iterations);
 }
