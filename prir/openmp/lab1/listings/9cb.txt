@@ -1,5 +1,11 @@
 N: 10, M: 8, P: 4
 
-time: 0.012894
+time: 0.000736
+
+is correct? OK
+
+N: 10, M: 8, P: 4
+
+time: 0.000634
 
 is correct? OK

@@ -22,10 +22,6 @@ int main() {
         for(int j = 0; j < M; j++) {
             main[i][j] = rand()%10;
         }
-        for(int p = 0; p < P; p++) {
-            output1[i][p] = 0;
-            output2[i][p] = 0;
-        }
     }
     for(int i = 0; i < M; i++) {
         for(int j = 0; j < P; j++) {
@@ -35,28 +31,35 @@ int main() {
     int i,j,k;
     for(i = 0; i < N; i++) {
         for(j = 0; j < P; j++) {
+            int sum = 0;
             for(k = 0; k < M; k++) {
-                output1[i][j] += main[i][k] * multi[k][j];
+                sum += main[i][k] * multi[k][j];
             }
+            output1[i][j] = sum;
         }
     }
     double time = omp_get_wtime();
-    #pragma omp parallel for private(i) schedule(dynamic)
     for(i = 0; i < N; i++) {
+    #pragma omp parallel for private(j) private(k) schedule(dynamic, 3)
         for(j = 0; j < P; j++) {
+            int sum = 0;
             for(k = 0; k < M; k++) {
-                output2[i][j] += main[i][k] * multi[k][j];
+                sum += main[i][k] * multi[k][j];
             }
+            output2[i][j] = sum;
         }
     }
     printf("time: %f\n\n", omp_get_wtime() - time);
 
     bool correct = true;
+    int errors = 0;
     for(i = 0; i < N; i++) {
         for(j = 0; j < P; j++) {
-            if(output1[i][j] != output2[i][j])
+            if(output1[i][j] != output2[i][j]) {
                 correct = false;
+                errors++;
+            }
         }
     }
-    printf("is correct? %s", correct ? "OK" : "NOT OK");
+    printf("is correct? %s | %i errors", correct ? "OK" : "NOT OK", errors);
 }

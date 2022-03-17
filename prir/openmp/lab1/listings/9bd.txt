@@ -1,5 +1,11 @@
 N: 16, M: 12, P: 12
 
-time: 0.014961
+time: 0.000772
+
+is correct? OK
+
+N: 16, M: 12, P: 12
+
+time: 0.000716
 
 is correct? OK
